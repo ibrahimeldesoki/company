@@ -8,8 +8,10 @@ class BaseModel
 
     public function __construct()
     {
-        require_once '../core/DataBaseConnection.php';
-        $DBConnection = new DataBaseConnection();
+        include_once '../app/core/DataBaseConnection.php';
+        $className  = "app\\core\\DataBaseConnection";
+
+        $DBConnection = new $className();
         $this->pdo = $DBConnection->getPDO();
     }
 }

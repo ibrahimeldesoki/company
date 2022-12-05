@@ -1,4 +1,5 @@
 <?php
+namespace app\core;
 
 class DataBaseConnection
 {
@@ -13,8 +14,8 @@ class DataBaseConnection
         $password = 'root';
         $port = 3306;
         try {
-            $this->pdo = new PDO("mysql:host=$host;dbname=$db", $username, $password);
-        } catch (PDOException $exception) {
+            $this->pdo = new \PDO("mysql:host=$host;dbname=$db", $username, $password);
+        } catch (\PDOException $exception) {
             echo $exception->getMessage();
         }
     }

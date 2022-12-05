@@ -8,6 +8,7 @@ class User extends BaseModel
 {
     private $userName;
 
+
     public function getUserName()
     {
         return $this->userName;

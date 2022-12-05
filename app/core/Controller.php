@@ -7,10 +7,10 @@ class Controller
 
     protected function model($modelName)
     {
-        var_dump($modelName);
         require_once '../app/models/' . $modelName . '.php';
+        $className = "app\\models\\". $modelName;
 
-        return new $modelName();
+        return new $className();
     }
 
     protected function view($view,$data = [])
