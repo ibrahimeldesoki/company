@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-require_once  __DIR__."/BaseModel.php";
+//require_once  __DIR__."/BaseModel.php";
 
 class User extends BaseModel
 {
