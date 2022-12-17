@@ -2,23 +2,19 @@
 
 namespace app\Database\migrations;
 
+use app\Interfaces\DBInterface;
 use app\models\BaseModel;
 
-require_once __DIR__ . '/../../models/BaseModel.php';
-
-class CreateUserTable extends BaseModel
+class CreateUserTable extends BaseModel implements DBInterface
 {
     public function __construct()
     {
         parent::__construct();
-        $this->migrate();
     }
 
-    private function migrate()
+    public function migrate()
     {
-        $isMigrated = $this->ifExistTable('users');
-        if (empty($isMigrated)) {
-            $create = 'CREATE TABLE users (
+        $create = 'CREATE TABLE users (
                 id int (11)  not null AUTO_INCREMENT,
                 user_name varchar(50) not null ,
                 email varchar(50) not null ,
@@ -27,7 +23,8 @@ class CreateUserTable extends BaseModel
                 primary key (id)
             )';
 
-            $this->pdo->exec($create);
-        }
+        $this->pdo->exec($create);
+
+
     }
 }
