@@ -15,7 +15,7 @@ class App
             $this->controller = $uri[0];
             unset($uri[0]);
         }
-        require_once '../app/controllers/' . $this->controller . '.php';
+        require_once  __DIR__ .'/../controllers/'. $this->controller . '.php';
 
         $class = "app\\controllers\\{$this->controller}";
         $controllerObj = new $class();
