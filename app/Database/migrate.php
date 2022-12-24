@@ -4,6 +4,7 @@ namespace app\Database;
 require_once __DIR__ . '/../../autoload.php';
 
 use app\core\DataBaseConnection;
+use app\core\MigrationTable;
 
 class migrate
 {

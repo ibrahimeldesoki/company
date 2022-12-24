@@ -1,7 +1,6 @@
 <?php
-namespace app\Database;
+namespace app\core;
 
-use app\core\DataBaseConnection;
 use app\Interfaces\DBInterface;
 
 class MigrationTable implements DBInterface
