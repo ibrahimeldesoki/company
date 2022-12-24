@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Database\migrations;
+namespace Database\migrations;
 
 use app\Interfaces\DBInterface;
 

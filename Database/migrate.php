@@ -1,7 +1,7 @@
 <?php
 
-namespace app\Database;
-require_once __DIR__ . '/../../autoload.php';
+namespace Database;
+require_once __DIR__ . '/../autoload.php';
 
 use app\core\DataBaseConnection;
 use app\core\MigrationTable;
@@ -21,14 +21,17 @@ class migrate
     {
         $dir = __DIR__ . "/migrations";
         $migrationFiles = scandir($dir);
+
         foreach ($migrationFiles as $migrationFile) {
+
             if ($migrationFile != "." && $migrationFile != "..") {
                 $className = pathinfo($migrationFile, PATHINFO_FILENAME);
                 $isMigrated = $this->isMigrated($className);
-                if (empty($isMigrated)){
-                    $classNamespace = "app\\Database\\migrations\\" . $className;
+                if (empty($isMigrated)) {
+                    $classNamespace = "Database\\migrations\\" . $className;
                     $migrationObj = new $classNamespace();
-                    $createStatement  = $migrationObj->migrate();
+
+                    $createStatement = $migrationObj->migrate();
                     $this->pdo->exec($createStatement);
 
                     $this->updateMigration($className);
