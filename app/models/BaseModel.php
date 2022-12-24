@@ -2,25 +2,15 @@
 
 namespace app\models;
 
+use app\core\DataBaseConnection;
+
 class BaseModel
 {
     protected $pdo;
 
     public function __construct()
     {
-        include_once __DIR__ . '/../core/DataBaseConnection.php';
-        $className = "app\\core\\DataBaseConnection";
-
-        $DBConnection = new $className();
+        $DBConnection = new DataBaseConnection();
         $this->pdo = $DBConnection->getPDO();
-    }
-
-    public function ifExistTable(string $tableName)
-    {
-        $sql = "SHOW TABLES LIKE '" . $tableName . "'";
-
-        $q = $this->pdo->query($sql);
-
-        return $q->fetch();
     }
 }

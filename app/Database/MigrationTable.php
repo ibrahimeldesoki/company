@@ -1,15 +1,17 @@
 <?php
 namespace app\Database;
 
+use app\core\DataBaseConnection;
 use app\Interfaces\DBInterface;
-use app\models\BaseModel;
 
-class MigrationTable extends BaseModel implements DBInterface
+class MigrationTable implements DBInterface
 {
+    private $pdo;
+
     public function __construct()
     {
-
-        parent::__construct();
+        $DBConnection = new DataBaseConnection();
+        $this->pdo =$DBConnection->getPDO();
         $this->migrate();
     }
 
@@ -26,5 +28,14 @@ class MigrationTable extends BaseModel implements DBInterface
 
             $this->pdo->exec($create);
         }
+    }
+
+    public function ifExistTable(string $tableName)
+    {
+        $sql = "SHOW TABLES LIKE '" . $tableName . "'";
+
+        $q = $this->pdo->query($sql);
+
+        return $q->fetch();
     }
 }

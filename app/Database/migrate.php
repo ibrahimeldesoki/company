@@ -3,13 +3,16 @@
 namespace app\Database;
 require_once __DIR__ . '/../../autoload.php';
 
-use app\models\BaseModel;
+use app\core\DataBaseConnection;
 
-class migrate extends BaseModel
+class migrate
 {
+    protected $pdo;
+
     public function __construct()
     {
-        parent::__construct();
+        $DBConnection = new DataBaseConnection();
+        $this->pdo = $DBConnection->getPDO();
         $this->migrationProcess();
     }
 
@@ -24,11 +27,11 @@ class migrate extends BaseModel
                 if (empty($isMigrated)){
                     $classNamespace = "app\\Database\\migrations\\" . $className;
                     $migrationObj = new $classNamespace();
-                    $migrationObj->migrate();
+                    $createStatement  = $migrationObj->migrate();
+                    $this->pdo->exec($createStatement);
 
                     $this->updateMigration($className);
                 }
-
             }
         }
     }
@@ -54,7 +57,7 @@ class migrate extends BaseModel
     }
 }
 
-
+new MigrationTable();
 new migrate();
 
 

@@ -3,15 +3,9 @@
 namespace app\Database\migrations;
 
 use app\Interfaces\DBInterface;
-use app\models\BaseModel;
 
-class CreateUserTable extends BaseModel implements DBInterface
+class CreateUserTable implements DBInterface
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function migrate()
     {
         $create = 'CREATE TABLE users (
@@ -23,8 +17,6 @@ class CreateUserTable extends BaseModel implements DBInterface
                 primary key (id)
             )';
 
-        $this->pdo->exec($create);
-
-
+        return  $create;
     }
 }
