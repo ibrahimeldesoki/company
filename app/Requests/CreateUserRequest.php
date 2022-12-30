@@ -9,13 +9,12 @@ class CreateUserRequest
     public static function validate(array $request)
     {
         $rules = [
-            'user_name' => ['required', 'integer'],
+            'user_name' => ['required', 'string'],
             'email' => ['required', 'string'],
-            'password' => ['required', 'bool'],
+            'password' => ['required', 'string'],
         ];
         $validator = new Validation();
 
         return  $validator->validateRequest($request, $rules);
-
     }
 }
