@@ -6,24 +6,27 @@ class Validation
 {
     private $errors = [];
 
-    public function validateRequest(array $request, array $rules)
+    public static function validateRequest($request)
     {
+        $obj = new static();
+        $rules =  $obj->rules();
+
         foreach ($rules as $ruleKey => $ruleValue) {
             if (in_array('required', $ruleValue)) {
-                $this->validateRequiredInput($ruleKey, $request);
+                $obj->validateRequiredInput($ruleKey, $request);
             }
             if (in_array('integer', $ruleValue) && array_key_exists($ruleKey,$request)) {
-                $this->validateInteger($ruleKey, $request);
+                $obj->validateInteger($ruleKey, $request);
             }
             if (in_array('string', $ruleValue) && array_key_exists($ruleKey,$request)) {
-                $this->validateString($ruleKey, $request);
+                $obj->validateString($ruleKey, $request);
             }
             if (in_array('bool', $ruleValue) && array_key_exists($ruleKey,$request)) {
-                $this->validateBool($ruleKey, $request);
+                $obj->validateBool($ruleKey, $request);
             }
         }
 
-        return ['errors' => $this->errors];
+        return ['errors' => $obj->errors];
     }
 
     private function validateRequiredInput(string $ruleKey, array $request)

@@ -16,8 +16,9 @@ class User extends Controller
     public function create()
     {
         $request = $_POST;
+        $validationErrors =  CreateUserRequest::validateRequest($request);
 
-        $validationErrors = CreateUserRequest::validate($request)['errors'];
+
         if(!empty($validationErrors)){
             echo json_encode(['errors' => $validationErrors]);
             die();

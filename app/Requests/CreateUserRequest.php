@@ -4,17 +4,15 @@ namespace app\Requests;
 
 use app\core\Validation;
 
-class CreateUserRequest
+class CreateUserRequest extends Validation
 {
-    public static function validate(array $request)
+
+    public function rules()
     {
-        $rules = [
+        return [
             'user_name' => ['required', 'string'],
             'email' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
-        $validator = new Validation();
-
-        return  $validator->validateRequest($request, $rules);
     }
 }
