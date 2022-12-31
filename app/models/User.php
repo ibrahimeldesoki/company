@@ -15,4 +15,23 @@ class User extends BaseModel
     {
         $this->userName = $user;
     }
+
+    public function create(array $data = [])
+    {
+        $createUserStatement = 'INSERT INTO users (user_name , email ,password, phone,token) values (:user_name,:email,:password,:phone,:token)';
+        try {
+            $this->pdo->prepare($createUserStatement)->execute(
+                [
+                    ':user_name' => $data['user_name'],
+                    ':email' => $data['email'],
+                    ':password' => $data['password'],
+                    ':phone' => $data['phone'] ?? null,
+                    ':token' => $data['token']
+                ]);
+        } catch (\PDOException $exception) {
+            return 'invalid request data';
+        }
+
+        return true;
+    }
 }
