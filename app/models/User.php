@@ -34,4 +34,16 @@ class User extends BaseModel
 
         return true;
     }
+
+    public function findByMail(string $email)
+    {
+        $selectUser = 'SELECT * FROM users where email=:email';
+        try {
+            $user = $this->pdo->prepare($selectUser);
+            $user->execute(['email'=>$email]);
+            return $user->fetch();
+        } catch (\PDOException $exception) {
+            return 'invalid request data';
+        }
+    }
 }
