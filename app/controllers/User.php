@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\core\Validation;
 use app\Requests\CreateUserRequest;
 use app\Requests\LoginUserRequest;
 
@@ -52,7 +53,7 @@ class User extends Controller
         $validationErrors = LoginUserRequest::validateRequest($loginRequest);
 
         if(!empty($validationErrors['errors'])){
-            echo json_encode($validationErrors);
+            echo json_encode($validationErrors, http_response_code(Validation::unprocessableEntity));
             die();
         }
         $user = $this->userModel->findByMail($loginRequest['email']);

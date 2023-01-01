@@ -5,6 +5,7 @@ namespace app\core;
 class Validation
 {
     private $errors = [];
+    const unprocessableEntity = 422;
 
     public static function validateRequest($request)
     {
