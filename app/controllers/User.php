@@ -52,15 +52,27 @@ class User extends Controller
         $loginRequest = $_POST;
         $validationErrors = LoginUserRequest::validateRequest($loginRequest);
 
-        if(!empty($validationErrors['errors'])){
+        if (!empty($validationErrors['errors'])) {
             echo json_encode($validationErrors, http_response_code(Validation::unprocessableEntity));
             die();
         }
         $user = $this->userModel->findByMail($loginRequest['email']);
-
-        echo json_encode([
-            'message' => 'login successfully',
-            'user_token' => $user['token'],
+        if (!$user || !$this->validatePassword($loginRequest['password'], $user['password'])){
+            echo json_encode([
+                'message' => 'Invalid credientals',
             ]);
+            die();
         }
+
+            echo json_encode([
+                'message' => 'login successfully',
+                'user_token' => $user['token'],
+            ]);
+    }
+
+
+    private function validatePassword($password, $hashPassword) :bool
+    {
+      return  password_verify($password, $hashPassword);
+    }
 }
