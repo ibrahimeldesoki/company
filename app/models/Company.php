@@ -25,4 +25,16 @@ class Company extends BaseModel
         return true;
     }
 
+    public function findByMail(string $email)
+    {
+        $company = 'SELECT * FROM companies where email=:email';
+        try {
+            $company = $this->pdo->prepare($company);
+            $company->execute(['email'=>$email]);
+            return $company->fetch();
+        } catch (\PDOException $exception) {
+            return 'invalid request data';
+        }
+    }
+
 }

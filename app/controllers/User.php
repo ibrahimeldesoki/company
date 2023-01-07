@@ -6,6 +6,7 @@ use app\core\Controller;
 use app\core\Validation;
 use app\Requests\CreateUserRequest;
 use app\Requests\LoginUserRequest;
+use app\Utilities\Password;
 use app\Utilities\TokenUtil;
 
 class User extends Controller
@@ -53,9 +54,9 @@ class User extends Controller
             die();
         }
         $user = $this->userModel->findByMail($loginRequest['email']);
-        if (!$user || !$this->validatePassword($loginRequest['password'], $user['password'])){
+        if (!$user || ! Password::verify($loginRequest['password'], $user['password'])){
             echo json_encode([
-                'message' => 'Invalid credientals',
+                'message' => 'Invalid credentials',
             ]);
             die();
         }
@@ -64,11 +65,5 @@ class User extends Controller
                 'message' => 'login successfully',
                 'user_token' => $user['token'],
             ]);
-    }
-
-
-    private function validatePassword($password, $hashPassword) :bool
-    {
-      return  password_verify($password, $hashPassword);
     }
 }
