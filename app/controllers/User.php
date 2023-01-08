@@ -6,6 +6,8 @@ use app\core\Controller;
 use app\core\Validation;
 use app\Requests\CreateUserRequest;
 use app\Requests\LoginUserRequest;
+use app\Utilities\Password;
+use app\Utilities\TokenUtil;
 
 class User extends Controller
 {
@@ -26,8 +28,8 @@ class User extends Controller
             die();
         }
         $request['password'] = password_hash($request['password'],PASSWORD_DEFAULT);
-        $token = $this->createToken($request['password']);
-        $request['token'] = $token;
+
+        $request['token'] = TokenUtil::GenerateToken();
 
         $user = $this->userModel->create($request);
 
@@ -42,11 +44,6 @@ class User extends Controller
         echo json_encode($request);
     }
 
-    private function createToken(string $password)
-    {
-        return substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1,60).rand(1,1000000);
-    }
-
     public function login()
     {
         $loginRequest = $_POST;
@@ -57,9 +54,9 @@ class User extends Controller
             die();
         }
         $user = $this->userModel->findByMail($loginRequest['email']);
-        if (!$user || !$this->validatePassword($loginRequest['password'], $user['password'])){
+        if (!$user || ! Password::verify($loginRequest['password'], $user['password'])){
             echo json_encode([
-                'message' => 'Invalid credientals',
+                'message' => 'Invalid credentials',
             ]);
             die();
         }
@@ -68,11 +65,5 @@ class User extends Controller
                 'message' => 'login successfully',
                 'user_token' => $user['token'],
             ]);
-    }
-
-
-    private function validatePassword($password, $hashPassword) :bool
-    {
-      return  password_verify($password, $hashPassword);
     }
 }
