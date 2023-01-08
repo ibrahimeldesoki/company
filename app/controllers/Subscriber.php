@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\core\Controller;
 use app\Requests\CompanySubscriberRequest;
+use app\Utilities\StatusUtil;
+
 
 class Subscriber extends Controller
 {
@@ -22,11 +24,33 @@ class Subscriber extends Controller
             echo json_encode($validationErrors);
             die();
         }
-
+        $isSubscriber = $this->subscriberModel->checkUserSubscriptionAtCompany($request);
+        if ($isSubscriber)
+        {
+            echo json_encode(['message' => 'Already Subscriber at your company']);
+            die();
+        }
+        $isPendingSubscriber = $this->subscriberModel->isSubscriber($request['user_id'], StatusUtil::PENDING->value);
+        if ($isPendingSubscriber)
+        {
+            $subscriber = $this->subscriberModel->update($request);
+            if ($subscriber)
+            {
+                echo json_encode("subscriber added with pending status");
+                die();
+            }
+        }
+        $isActiveSubscriber = $this->subscriberModel->isSubscriber($request['user_id'], StatusUtil::ACTIVE->value);
+        if ($isActiveSubscriber)
+        {
+                echo json_encode("not Allowed");
+                die();
+        }
         $subscriber = $this->subscriberModel->create($request);
 
         if ($subscriber !== true) {
             echo json_encode(['errors' => $subscriber]);
+            die();
         }
 
         echo json_encode("subscriber added with pending status");
