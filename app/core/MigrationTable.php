@@ -1,7 +1,7 @@
 <?php
-namespace app\core;
+namespace App\core;
 
-use app\Interfaces\DBInterface;
+use App\Interfaces\DBInterface;
 
 class MigrationTable implements DBInterface
 {

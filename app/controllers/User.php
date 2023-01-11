@@ -1,13 +1,13 @@
 <?php
 
-namespace app\controllers;
+namespace App\controllers;
 
-use app\core\Controller;
-use app\core\Validation;
-use app\Requests\CreateUserRequest;
-use app\Requests\LoginUserRequest;
-use app\Utilities\Password;
-use app\Utilities\TokenUtil;
+use App\core\Controller;
+use App\core\Validation;
+use App\Requests\CreateUserRequest;
+use App\Requests\LoginUserRequest;
+use App\Utilities\Password;
+use App\Utilities\TokenUtil;
 
 class User extends Controller
 {

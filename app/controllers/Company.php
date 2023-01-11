@@ -1,12 +1,12 @@
 <?php
 
-namespace app\controllers;
+namespace App\controllers;
 
-use app\core\Controller;
-use app\Requests\CreateCompanyRequest;
-use app\Requests\LoginCompanyRequest;
-use app\Utilities\Password;
-use app\Utilities\TokenUtil;
+use App\core\Controller;
+use App\Requests\CreateCompanyRequest;
+use App\Requests\LoginCompanyRequest;
+use App\Utilities\Password;
+use App\Utilities\TokenUtil;
 
 class Company extends Controller
 {

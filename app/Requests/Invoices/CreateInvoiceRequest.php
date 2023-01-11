@@ -1,8 +1,8 @@
 <?php
 
-namespace app\Requests\Invoices;
+namespace App\Requests\Invoices;
 
-use app\core\Validation;
+use App\core\Validation;
 
 class CreateInvoiceRequest extends Validation
 {

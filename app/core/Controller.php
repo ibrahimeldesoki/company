@@ -1,5 +1,5 @@
 <?php
-namespace app\core;
+namespace App\core;
 
 class Controller
 {
@@ -7,8 +7,7 @@ class Controller
 
     protected function model($modelName)
     {
-        require_once '../app/models/' . $modelName . '.php';
-        $className = "app\\models\\". $modelName;
+        $className = "App\\models\\". $modelName;
 
         return new $className();
     }

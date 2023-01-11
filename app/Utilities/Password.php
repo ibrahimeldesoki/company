@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Utilities;
+namespace App\Utilities;
 
 class Password
 {
