@@ -1,8 +1,8 @@
 <?php
 
-namespace app\models;
+namespace App\models;
 
-use app\core\DataBaseConnection;
+use App\core\DataBaseConnection;
 
 class BaseModel
 {

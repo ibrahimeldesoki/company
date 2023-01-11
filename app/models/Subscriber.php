@@ -1,8 +1,8 @@
 <?php
 
-namespace app\models;
+namespace App\models;
 
-use app\Utilities\StatusUtil;
+use App\Utilities\StatusUtil;
 
 class Subscriber extends BaseModel
 {

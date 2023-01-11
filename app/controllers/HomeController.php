@@ -1,7 +1,7 @@
 <?php
 
-namespace  app\controllers;
-use app\core\Controller;
+namespace  App\controllers;
+use App\core\Controller;
 
 //require_once  __DIR__."/HomeController.php";
 

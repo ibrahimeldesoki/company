@@ -3,8 +3,8 @@
 namespace Database;
 require_once __DIR__ . '/../autoload.php';
 
-use app\core\DataBaseConnection;
-use app\core\MigrationTable;
+use App\core\DataBaseConnection;
+use App\core\MigrationTable;
 
 class migrate
 {

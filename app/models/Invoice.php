@@ -1,8 +1,8 @@
 <?php
 
-namespace app\models;
+namespace App\models;
 
-use app\models\Subscriber as SubscriberModel;
+use App\models\Subscriber as SubscriberModel;
 
 class Invoice extends BaseModel
 {

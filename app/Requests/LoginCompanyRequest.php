@@ -1,8 +1,8 @@
 <?php
 
-namespace app\Requests;
+namespace App\Requests;
 
-use app\core\Validation;
+use App\core\Validation;
 
 class LoginCompanyRequest extends Validation
 {

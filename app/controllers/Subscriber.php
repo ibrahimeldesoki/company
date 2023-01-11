@@ -1,12 +1,11 @@
 <?php
 
-namespace app\controllers;
+namespace App\controllers;
 
-use app\core\Controller;
-use app\models\Subscriber as SubscriberModel;
-use app\Requests\CompanySubscriberRequest;
-use app\Utilities\StatusUtil;
-use JetBrains\PhpStorm\NoReturn;
+use App\core\Controller;
+use App\models\Subscriber as SubscriberModel;
+use App\Requests\CompanySubscriberRequest;
+use App\Utilities\StatusUtil;
 
 
 class Subscriber extends Controller

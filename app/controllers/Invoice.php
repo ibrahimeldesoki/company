@@ -1,11 +1,11 @@
 <?php
 
-namespace app\controllers;
+namespace App\controllers;
 
-use app\Actions\CreateInvoiceAction;
-use app\core\Controller;
-use app\models\Invoice as InvoiceModel;
-use app\Requests\Invoices\CreateInvoiceRequest;
+use App\Actions\CreateInvoiceAction;
+use App\core\Controller;
+use App\models\Invoice as InvoiceModel;
+use App\Requests\Invoices\CreateInvoiceRequest;
 
 class Invoice extends Controller
 {

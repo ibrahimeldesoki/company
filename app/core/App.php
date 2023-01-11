@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core;
+namespace App\core;
 
 class App
 {
@@ -17,7 +17,7 @@ class App
         }
         require_once  __DIR__ .'/../controllers/'. $this->controller . '.php';
 
-        $class = "app\\controllers\\{$this->controller}";
+        $class = "App\\controllers\\{$this->controller}";
         $controllerObj = new $class();
         if (!empty($uri[1])) {
             if (method_exists($controllerObj, $uri[1])) {

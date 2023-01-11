@@ -2,7 +2,7 @@
 
 namespace Database\migrations;
 
-use app\Interfaces\DBInterface;
+use App\Interfaces\DBInterface;
 
 class CreateInvoiceTable implements DBInterface
 {
