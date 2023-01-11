@@ -8,10 +8,11 @@ class DataBaseConnection
 
     public function __construct()
     {
-        $host = '127.0.0.1';
-        $db = 'company';
-        $username = 'root';
-        $password = 'root';
+
+        $host = $_ENV['DB_HOST'];
+        $db = $_ENV['DB_NAME'];
+        $username = $_ENV['DB_USERNAME'];
+        $password = $_ENV['DB_PASSWORD'];
         $port = 3306;
         try {
             $this->pdo = new \PDO("mysql:host=$host;dbname=$db", $username, $password);

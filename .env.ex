@@ -1,0 +1,4 @@
+B_HOST="127.0.0.1"
+DB_NAME="test"
+DB_USERNAME=user
+DB_PASSWORD=pass
