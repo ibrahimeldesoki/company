@@ -33,13 +33,13 @@ class Subscriber extends BaseModel
                                 AND 
                                 `company_id`=:company_id
                               ';
-            $subscriber = $this->pdo->prepare($selectSubscriber);
-            $subscriber->execute([
-                ':user_id' => $data['user_id'],
-                ':company_id' => $data['company_id']
-            ]);
+        $subscriber = $this->pdo->prepare($selectSubscriber);
+        $subscriber->execute([
+            ':user_id' => $data['user_id'],
+            ':company_id' => $data['company_id']
+        ]);
 
-            return $subscriber->fetch();
+        return $subscriber->fetch();
     }
 
     public function isSubscriber(int $userId, string $status)
@@ -67,5 +67,29 @@ class Subscriber extends BaseModel
             ':company_id' => $data['company_id'],
             ':user_id' => $data['user_id']
         ]);
+    }
+
+    public function getCompanyActiveAndPendingCount(int $companyId) :array
+    {
+        $query = 'SELECT status,count(*) AS count from subscribers where 1=1 
+                                AND  `company_id`=:company_id
+                                AND `status` <> :status
+                                group by status
+                               ';
+
+        $count = $this->pdo->prepare($query);
+        $count->execute([
+            ':company_id' => $companyId,
+            ':status' => StatusUtil::IN_ACTIVE->value
+        ]);
+
+        $rows = $count->fetchAll(\PDO::FETCH_ASSOC);
+        $groupedRows = [];
+        foreach ($rows as $row){
+            $groupedRows[$row['status']] = $row['count'];
+
+        }
+
+        return $groupedRows;
     }
 }

@@ -3,20 +3,22 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\models\Subscriber as SubscriberModel;
 use app\Requests\CompanySubscriberRequest;
 use app\Utilities\StatusUtil;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class Subscriber extends Controller
 {
-    private $subscriberModel;
+    private SubscriberModel $subscriberModel;
 
     public function __construct()
     {
         $this->subscriberModel = $this->model('Subscriber');
     }
 
-    public function company()
+    public function company(): void
     {
         $request = $_POST;
         $validationErrors = CompanySubscriberRequest::validateRequest($request);

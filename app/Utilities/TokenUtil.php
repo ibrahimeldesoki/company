@@ -10,4 +10,6 @@ class TokenUtil
 
         return bin2hex($bytes);
     }
+
+//    public function
 }

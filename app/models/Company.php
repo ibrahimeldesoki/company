@@ -36,5 +36,4 @@ class Company extends BaseModel
             return 'invalid request data';
         }
     }
-
 }
