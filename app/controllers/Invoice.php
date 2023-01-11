@@ -2,10 +2,10 @@
 
 namespace app\controllers;
 
+use app\Actions\CreateInvoiceAction;
 use app\core\Controller;
 use app\models\Invoice as InvoiceModel;
 use app\Requests\Invoices\CreateInvoiceRequest;
-use app\Utilities\InvoiceUtil;
 
 class Invoice extends Controller
 {
@@ -26,7 +26,7 @@ class Invoice extends Controller
         }
         $count = $this->invoiceModel->getCompanyActiveAndPendingCount($request['company_id']);
 
-        $invoiceData = InvoiceUtil::getInvoiceData($request['company_id'],$count);
+        $invoiceData = CreateInvoiceAction::getInvoiceData($request['company_id'],$count);
 
         $invoice = $this->invoiceModel->create($invoiceData);
         if ($invoice !== true)

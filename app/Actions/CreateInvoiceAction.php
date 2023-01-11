@@ -1,8 +1,8 @@
 <?php
 
-namespace app\Utilities;
+namespace app\Actions;
 
-class InvoiceUtil
+class CreateInvoiceAction
 {
     public const SubscriberPrice = 25;
 
