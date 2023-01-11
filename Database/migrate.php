@@ -26,7 +26,9 @@ class migrate
 
             if ($migrationFile != "." && $migrationFile != "..") {
                 $className = pathinfo($migrationFile, PATHINFO_FILENAME);
-                $isMigrated = $this->isMigrated($className);
+                $newClassName = substr($className, strpos($className, "_") + 1);
+
+                $isMigrated = $this->isMigrated($newClassName);
                 if (empty($isMigrated)) {
                     $classNamespace = "Database\\migrations\\" . $className;
                     $migrationObj = new $classNamespace();
