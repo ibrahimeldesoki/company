@@ -4,7 +4,7 @@ namespace App\core;
 
 use App\Exceptions\Handler;
 
-class Exception
+class ExceptionHandler
 {
     public function __construct()
     {
