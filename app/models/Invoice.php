@@ -17,7 +17,6 @@ class Invoice extends BaseModel
             (reference_number, start_at, end_at, company_id, total_price, active_count, pending_count) 
             values 
             (:reference_number, :start_at, :end_at, :company_id, :total_price, :active_count, :pending_count)';
-        try {
             $this->pdo->prepare($create)->execute(
                 [
                     ':reference_number' => $data['reference_number'],
@@ -28,9 +27,6 @@ class Invoice extends BaseModel
                     ':active_count' => $data['active_count'],
                     ':pending_count' => $data['pending_count']
                 ]);
-        } catch (\PDOException $exception) {
-            return 'invalid request data';
-        }
 
         return true;
     }
