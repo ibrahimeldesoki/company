@@ -2,13 +2,12 @@
 
 namespace App;
 use App\core\App;
-use App\Exceptions\Handler;
+use App\core\Exception;
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__.'/../');
 $dotenv->safeLoad();
-
-Handler::report();
+new Exception();
 
 require_once 'core/DataBaseConnection.php';
 require_once 'core/App.php';

@@ -2,17 +2,12 @@
 
 namespace App\Exceptions;
 
-
-class Handler extends \Exception
+class Handler
 {
-    public static function report()
+    function render($e)
     {
-        set_exception_handler(function ($e) {
-            if ($e instanceof \PDOException)
-            {
-              echo  json_encode("some thing went wrong");
-            }
-
-        });
+        if ($e instanceof \PDOException) {
+            echo json_encode("some thing went wrong");
+        }
     }
 }
