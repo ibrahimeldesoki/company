@@ -10,7 +10,6 @@ class Company extends BaseModel
             (name , email ,password,token) 
             values 
                 (:name,:email,:password,:token)';
-        try {
             $this->pdo->prepare($createCompanyAccount)->execute(
                 [
                     ':name' => $data['name'],
@@ -18,9 +17,6 @@ class Company extends BaseModel
                     ':password' => $data['password'],
                     ':token' => $data['token']
                 ]);
-        } catch (\PDOException $exception) {
-            return 'invalid request data';
-        }
 
         return true;
     }
@@ -28,12 +24,8 @@ class Company extends BaseModel
     public function findByMail(string $email)
     {
         $company = 'SELECT * FROM companies where email=:email';
-        try {
             $company = $this->pdo->prepare($company);
             $company->execute(['email'=>$email]);
             return $company->fetch();
-        } catch (\PDOException $exception) {
-            return 'invalid request data';
-        }
     }
 }
