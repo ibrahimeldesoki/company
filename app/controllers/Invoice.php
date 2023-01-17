@@ -4,6 +4,7 @@ namespace App\controllers;
 
 use App\Actions\CreateInvoiceAction;
 use App\core\Controller;
+use App\core\Response;
 use App\models\Invoice as InvoiceModel;
 use App\Requests\Invoices\CreateInvoiceRequest;
 
@@ -35,6 +36,7 @@ class Invoice extends Controller
             die();
 
         }
-        echo json_encode("DONE");
+
+        return new Response(['message' => 'invoice created successfully'],500);
     }
 }

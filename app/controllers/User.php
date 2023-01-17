@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use App\core\Controller;
+use App\core\Response;
 use App\core\Validation;
 use App\Requests\CreateUserRequest;
 use App\Requests\LoginUserRequest;
@@ -65,5 +66,12 @@ class User extends Controller
                 'message' => 'login successfully',
                 'user_token' => $user['token'],
             ]);
+    }
+
+    public function info()
+    {
+        $user = new \App\Utilities\User('test','test@mail');
+
+        return new Response($user);
     }
 }

@@ -28,12 +28,15 @@ class App
 
         $this->params = $uri ? array_values($uri) : [];
         $params = $this->params;
-//        if(empty($this->params))
-//        {
-//            $params = $_POST;
-//        }
-//
-        call_user_func_array([$controllerObj, $this->method], $params);
+
+        $result = call_user_func_array([$controllerObj, $this->method], $params);
+        if($result instanceof Response)
+        {
+            return $result->toResponse();
+        }
+        $response  = new Response($result);
+
+        $response->toResponse();
     }
 
     public function parseUrl()

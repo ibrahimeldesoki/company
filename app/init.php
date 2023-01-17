@@ -12,8 +12,8 @@ new ExceptionHandler();
 require_once 'core/DataBaseConnection.php';
 require_once 'core/App.php';
 require_once 'core/Controller.php';
-$className  = "App\\core\\DataBaseConnection";
-$dbConnection = new $className();
-$app = new App();
+$DBConnection  = "App\\core\\DataBaseConnection";
+new $DBConnection();
+new App();
 
 
