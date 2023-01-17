@@ -14,29 +14,26 @@ class Invoice extends Controller
 
     public function __construct()
     {
-        $this->invoiceModel =  $this->model('Invoice');
+        $this->invoiceModel = $this->model('Invoice');
     }
 
     public function create()
     {
         $request = $_POST;
         $invoiceRequestErrors = CreateInvoiceRequest::validateRequest($request);
-        if (!empty($invoiceRequestErrors['errors'])){
-            echo json_encode($invoiceRequestErrors);
-            die();
+        if (!empty($invoiceRequestErrors['errors'])) {
+            return new Response($invoiceRequestErrors['errors'], 422);
         }
+
         $count = $this->invoiceModel->getCompanyActiveAndPendingCount($request['company_id']);
 
-        $invoiceData = CreateInvoiceAction::getInvoiceData($request['company_id'],$count);
+        $invoiceData = CreateInvoiceAction::getInvoiceData($request['company_id'], $count);
 
         $invoice = $this->invoiceModel->create($invoiceData);
-        if ($invoice !== true)
-        {
-            echo json_encode("something went wrong");
-            die();
-
+        if ($invoice !== true) {
+            return new Response(['message' => 'something went wrong'], 400);
         }
 
-        return new Response(['message' => 'invoice created successfully'],500);
+        return new Response(['message' => 'invoice created successfully'], 200);
     }
 }

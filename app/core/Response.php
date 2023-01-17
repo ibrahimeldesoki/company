@@ -2,8 +2,6 @@
 
 namespace App\core;
 
-use App\Utilities\Iarrable;
-
 class Response
 {
     private $content;
