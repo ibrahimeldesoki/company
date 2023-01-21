@@ -28,7 +28,6 @@ class App
 
         $this->params = $uri ? array_values($uri) : [];
         $params = $this->params;
-
         $result = call_user_func_array([$controllerObj, $this->method], $params);
         if($result instanceof Response)
         {
