@@ -24,7 +24,7 @@ class User extends Controller
         $validationErrors =  CreateUserRequest::validateRequest($request);
 
 
-        if(!empty($validationErrors)){
+        if(!empty($validationErrors['errors'])){
             echo json_encode($validationErrors);
             die();
         }

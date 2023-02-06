@@ -10,11 +10,9 @@ use App\Utilities\StatusUtil;
 
 class Subscriber extends Controller
 {
-    private SubscriberModel $subscriberModel;
 
-    public function __construct()
+    public function __construct(public readonly SubscriberModel $subscriberModel)
     {
-        $this->subscriberModel = $this->model('Subscriber');
     }
 
     public function company(): void

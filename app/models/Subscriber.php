@@ -2,11 +2,15 @@
 
 namespace App\models;
 
+use App\models\Subscriber as SubscriberModel;
 use App\Utilities\StatusUtil;
 
 class Subscriber extends BaseModel
 {
 //    private StatusUtil $status = StatusUtil::PENDING;
+    public function __construct(public readonly Company $subscriberModel)
+    {
+    }
 
     public function create(array $data): string|bool
     {
