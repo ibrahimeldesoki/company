@@ -21,7 +21,6 @@ class App
 
         $class = "App\\controllers\\{$this->controller}";
         $controllerObj = $this->resolveClassDependencies($class);
-        dd($controllerObj);
         if (!empty($uri[1])) {
             if (method_exists($controllerObj, $uri[1])) {
                 $this->method = $uri[1];
@@ -56,20 +55,16 @@ class App
         if ($reflection->getConstructor() and empty($reflection->getConstructor()->getParameters())) {
             return new $class;
         }
-        if (empty($reflection->getConstructor()))
-        {
-            return new $class;
-
-        }
+        $binding = [];
         foreach ($reflection->getConstructor()->getParameters() as $parameter) {
             if ($parameter->getType()) {
                 $paramClass =  $parameter->getType()->getName();
 
-                $this->binding[] = $this->resolveClassDependencies($paramClass);
+               $binding[] = $this->resolveClassDependencies($paramClass);
             }
         }
 
-        return new  $class(...$this->binding);
+        return new  $class(...$binding);
     }
 
     public function resolveMethodDependencies($class, $method)
