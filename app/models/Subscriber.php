@@ -2,14 +2,10 @@
 
 namespace App\models;
 
-use App\models\Subscriber as SubscriberModel;
 use App\Utilities\StatusUtil;
 
 class Subscriber extends BaseModel
 {
-//    private StatusUtil $status = StatusUtil::PENDING;
-
-
     public function create(array $data): string|bool
     {
         $create = 'INSERT INTO subscribers (user_id, company_id, status) values (:user_id, :company_id, :status)';

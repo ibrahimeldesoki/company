@@ -30,8 +30,10 @@ class App
 
         $this->params = $uri ? array_values($uri) : [];
         $params = $this->params;
-        $this->resolveMethodDependencies($class, $this->method);
-        $result = call_user_func_array([$controllerObj, $this->method], $params);
+
+        $methodParams =  $this->resolveMethodDependencies($class, $this->method,$params);
+
+        $result = call_user_func_array([$controllerObj, $this->method],$methodParams);
         if ($result instanceof Response) {
             return $result->toResponse();
         }
@@ -67,24 +69,25 @@ class App
         return new  $class(...$binding);
     }
 
-    public function resolveMethodDependencies($class, $method)
+    public function resolveMethodDependencies($class, $method,$params)
     {
         $reflection = new \ReflectionClass($class);
+        $binding = [];
         if ($reflection->hasMethod($method) and !empty($reflection->getMethod($method)->getParameters())) {
             foreach ($reflection->getMethod($method)->getParameters() as $parameter) {
+                if ($parameter->getType()) {
+                    $paramClass =  $parameter->getType()->getName();
+                    $binding[] = $this->resolveClassDependencies($paramClass);
+                }else
+                {
+                    $binding[] = array_shift($params);
+                }
             }
         }
-    }
-
-    public function make($concrete)
-    {
-        $callable = $this->binding[$concrete] ?? null;
-
-        if ($callable !== null) {
-            return $callable;
+        if ($reflection->hasMethod($method) and empty($reflection->getMethod($method)->getParameters())) {
+            return $params;
         }
 
+        return $binding;
     }
-
-
 }
