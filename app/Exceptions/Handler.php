@@ -9,5 +9,7 @@ class Handler
         if ($e instanceof \PDOException) {
             echo json_encode("some thing went wrong");
         }
+
+        throw $e;
     }
 }

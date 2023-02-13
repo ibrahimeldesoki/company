@@ -4,6 +4,10 @@ namespace App\models;
 
 class Company extends BaseModel
 {
+    public function __construct()
+    {
+    }
+
     public function create(array $data = [])
     {
         $createCompanyAccount = 'INSERT INTO companies

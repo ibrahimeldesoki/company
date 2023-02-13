@@ -8,6 +8,8 @@ class App
     protected $method = 'index';
     protected $params = [];
 
+    protected $binding = [];
+
     public function __construct()
     {
         $uri = $this->parseUrl();
@@ -15,10 +17,10 @@ class App
             $this->controller = $uri[0];
             unset($uri[0]);
         }
-        require_once  __DIR__ .'/../controllers/'. $this->controller . '.php';
+        require_once __DIR__ . '/../controllers/' . $this->controller . '.php';
 
         $class = "App\\controllers\\{$this->controller}";
-        $controllerObj = new $class();
+        $controllerObj = $this->resolveClassDependencies($class);
         if (!empty($uri[1])) {
             if (method_exists($controllerObj, $uri[1])) {
                 $this->method = $uri[1];
@@ -28,12 +30,14 @@ class App
 
         $this->params = $uri ? array_values($uri) : [];
         $params = $this->params;
-        $result = call_user_func_array([$controllerObj, $this->method], $params);
-        if($result instanceof Response)
-        {
+
+        $methodParams =  $this->resolveMethodDependencies($class, $this->method,$params);
+
+        $result = call_user_func_array([$controllerObj, $this->method],$methodParams);
+        if ($result instanceof Response) {
             return $result->toResponse();
         }
-        $response  = new Response($result);
+        $response = new Response($result);
 
         $response->toResponse();
     }
@@ -45,5 +49,45 @@ class App
             $uri = filter_var($uri, FILTER_SANITIZE_URL); // validate uri
             return explode('/', $uri); // explode to array
         }
+    }
+
+    private function resolveClassDependencies($class)
+    {
+        $reflection = new \ReflectionClass($class);
+        if ($reflection->getConstructor() and empty($reflection->getConstructor()->getParameters())) {
+            return new $class;
+        }
+        $binding = [];
+        foreach ($reflection->getConstructor()->getParameters() as $parameter) {
+            if ($parameter->getType()) {
+                $paramClass =  $parameter->getType()->getName();
+
+               $binding[] = $this->resolveClassDependencies($paramClass);
+            }
+        }
+
+        return new  $class(...$binding);
+    }
+
+    public function resolveMethodDependencies($class, $method,$params)
+    {
+        $reflection = new \ReflectionClass($class);
+        $binding = [];
+        if ($reflection->hasMethod($method) and !empty($reflection->getMethod($method)->getParameters())) {
+            foreach ($reflection->getMethod($method)->getParameters() as $parameter) {
+                if ($parameter->getType()) {
+                    $paramClass =  $parameter->getType()->getName();
+                    $binding[] = $this->resolveClassDependencies($paramClass);
+                }else
+                {
+                    $binding[] = array_shift($params);
+                }
+            }
+        }
+        if ($reflection->hasMethod($method) and empty($reflection->getMethod($method)->getParameters())) {
+            return $params;
+        }
+
+        return $binding;
     }
 }
